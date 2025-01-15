@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>IFit</title>
 </head>
 <body>
-    <h2>Página do usuario autenticado.</h2>
+    <h2>Página inicial</h2>
+    <a href="{% url 'login' %}">Entrar</a><br>
+    <a href="{% url 'newUser' %}">Criar conta</a>
 </body>
 </html>
