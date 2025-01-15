@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignIn</title>
+</head>
+<body>
+    <h2>Criar nova conta</h2>
+    <a href="{% url 'home' %}">home</a>
+    
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" value="Submit">Criar</button>
+      </form> 
+
+</body>
+</html>
