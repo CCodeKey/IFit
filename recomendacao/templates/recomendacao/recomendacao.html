@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendação</title>
+</head>
+<body>
+    <a href="{% url 'home' %}">Home</a><br>
+
+    <div class="home-page">
+        <h1>Sua Recomendação Personalizada</h1>
+        <p><strong>Recomendação:</strong> Treino de hipertrofia com pesos 3x por semana.</p>
+        
+        <h2>Seus Dados:</h2>
+        <ul>
+          <li>Idade: 25 anos</li>
+          <li>Altura: 1,75 m</li>
+          <li>Peso: 70 kg</li>
+        </ul>
+        
+        <h2>O que você gostaria de fazer a seguir?</h2>
+        <button onclick="window.location.href='/plano-treino'">Criar um Plano de Treino</button>
+        
+        <h2>Recursos para Você</h2>
+        <ul>
+          <li><a href="/artigos/treino-iniciante">Dicas de treino para iniciantes</a></li>
+        </ul>
+        
+        <button onclick="window.location.href='/logout'">Sair</button>
+      </div>
+
+</body>
+</html>
