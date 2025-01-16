@@ -1,18 +1,29 @@
 from django.shortcuts import render, redirect
 from .models import Usuario
-from django.views.generic import CreateView
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as _login
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, "recomendacao/index.html")
 
 def login(request):
     if request.method == 'POST':
-        email = request.POST.get('email',None)
-        senha = request.POST.get('password',None)
+        Email = request.POST.get('email',None)
+        Senha = request.POST.get('password',None)
 
-        # desenvolver o metodo para busca da existencia do usuario
-        # e processo de validação de dados
-        return redirect('home')
+        nomeUser = User.objects.filter(email=Email).first()
+        user = authenticate(username=nomeUser, password=Senha)
+
+        if user:
+            _login(request, user)
+            return redirect('home')
+        else:
+           return render(request, "recomendacao/login.html")
+            
+
 
     return render(request, "recomendacao/login.html")
 
@@ -24,12 +35,14 @@ def signIn(request):
         email = request.POST.get('email',None)
         senha = request.POST.get('password',None)
 
-        user = Usuario(
-            nome = nome,
-            sobrenome = sobrenome,
-            email = email,
-            senha = senha
-        )
+        user = User.objects.filter(email=email).first()
+
+        context = {'nome':nome, 'sobrenome':sobrenome, 'password':senha}
+
+        if user:
+            return render(request, "recomendacao/usuario_form.html", context)
+        
+        user = User.objects.create_user(username=nome,email= email, password=senha,last_name=sobrenome)
         user.save()
 
         return redirect('login')
@@ -37,8 +50,9 @@ def signIn(request):
 
     return render(request, "recomendacao/usuario_form.html")
 
+@login_required(login_url="auth/login")
 def home(request):
-    return render(request, "recomendacao/home.html")
+    return render(request, "recomendacao/home.html")        
 
 def recomendacao(request):
     if request.method=='POST':
