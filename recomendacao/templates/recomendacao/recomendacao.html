@@ -6,7 +6,7 @@
     <title>Recomendação</title>
 </head>
 <body>
-    <a href="{% url 'home' %}">Home</a><br>
+    <a href="{% url 'home' %}">Home</a><br><br>
 
     <div class="home-page">
         <h1>Sua Recomendação Personalizada</h1>
@@ -27,7 +27,8 @@
           <li><a href="/artigos/treino-iniciante">Dicas de treino para iniciantes</a></li>
         </ul>
         
-        <button onclick="window.location.href='/logout'">Sair</button>
+        <button onclick="window.location.href='{% url 'logout' %}'">Sair</button>
+        
       </div>
 
 </body>

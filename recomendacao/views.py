@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as _login
+from django.contrib.auth import logout as _logout
 from django.contrib.auth.decorators import login_required
 
 def index(request):
@@ -15,16 +16,13 @@ def login(request):
         Senha = request.POST.get('password',None)
 
         nomeUser = User.objects.filter(email=Email).first()
-        user = authenticate(username=nomeUser, password=Senha)
-
-        if user:
+        user = authenticate(request, username=nomeUser, password=Senha)
+        
+        if user is not None:
             _login(request, user)
             return redirect('home')
         else:
            return render(request, "recomendacao/login.html")
-            
-
-
     return render(request, "recomendacao/login.html")
 
 def signIn(request):
@@ -50,10 +48,15 @@ def signIn(request):
 
     return render(request, "recomendacao/usuario_form.html")
 
+def logout(request):
+    _logout(request)
+    return redirect('index')
+ 
 @login_required(login_url="auth/login")
 def home(request):
     return render(request, "recomendacao/home.html")        
 
+@login_required(login_url="auth/login")
 def recomendacao(request):
     if request.method=='POST':
         idade = request.POST.get('idade',None)
