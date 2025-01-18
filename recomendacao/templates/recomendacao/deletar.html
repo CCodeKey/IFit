@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendação</title>
+</head>
+<body>
+    <a href="{% url 'home' %}">home</a><br>
+    <a href="{% url 'logout' %}">Sair</a><br><br>
+
+    <form method="POST" action="{% url 'delete_recomendation' %}">
+    {% csrf_token %}
+
+        <h2>Informe seu id</h2>
+
+        <label for="link">ID:</label>
+        <input type="text" id="id" name="id" placeholder="1,2,3,4..." required><br><br><br>
+        
+        <button type="submit">buscar</button>
+      </form>   
+</body>
+</html>

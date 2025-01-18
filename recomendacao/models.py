@@ -1,16 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User 
 
+class Recomendacao(models.Model):
+    titulo = models.CharField(max_length=100)
+    descricao = models.CharField(max_length=500)
+    link = models.CharField(max_length=100)
+    data = models.DateTimeField(auto_now_add=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
-class Usuario(models.Model):
-    nome = models.CharField(max_length=8)
-    sobrenome = models.CharField(max_length=20)
-    email = models.EmailField()
-    senha = models.CharField(max_length=50)
-    
     def __str__(self):
-        nome = self.nome 
-        sobrenome = self.sobrenome
-        return f"{nome} {sobrenome}"
-
-# Falta fazer a recomendação - completo
-# Construir o sistema de login e signin
+        return self.titulo
+    
+    class Meta:
+        verbose_name = 'Recomendações'

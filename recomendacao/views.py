@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Usuario
 from django.http import HttpResponse
+from .models import Recomendacao
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as _login
@@ -54,23 +54,58 @@ def logout(request):
  
 @login_required(login_url="auth/login")
 def home(request):
-    return render(request, "recomendacao/home.html")        
+    recomendacao = Recomendacao.objects.all()
+    context = {'recomendacoes':recomendacao}
+    return render(request, "recomendacao/home.html", context)        
 
 @login_required(login_url="auth/login")
 def recomendacao(request):
     if request.method=='POST':
-        idade = request.POST.get('idade',None)
-        altura = request.POST.get('altura',None)
-        peso = request.POST.get('peso',None)
-        sexo = request.POST.get('sexo',None)
-        nivel_atividade = request.POST.get('nivel_atividade',None)
-        objetivo = request.POST.get('objetivo',None)
-        restricao = request.POST.get('restricao',None)
-        local_treino = request.POST.get('local_treino',None)
-        duracao_treino = request.POST.get('duracao_treino',None)
-        email = request.POST.get('email',None)
+    #     idade = request.POST.get('idade',None)
+    #     altura = request.POST.get('altura',None)
+    #     peso = request.POST.get('peso',None)
+    #     sexo = request.POST.get('sexo',None)
+    #     nivel_atividade = request.POST.get('nivel_atividade',None)
+    #     objetivo = request.POST.get('objetivo',None)
+    #     restricao = request.POST.get('restricao',None)
+    #     local_treino = request.POST.get('local_treino',None)
+    #     duracao_treino = request.POST.get('duracao_treino',None)
+    #     email = request.POST.get('email',None)
 
+    #     context = {'objetivo':objetivo, 'peso':peso, 'altura':altura}
+
+        titulo_ = request.POST.get('titulo',None)
+        descricao_ = request.POST.get('descricao',None)
+        link_ = request.POST.get('link',None)
+
+        # rec = Recomendacao(titulo=titulo_, descricao=descricao_,link=link_, usuario=request.user)
+        # rec.save()
         # Aqui será chamada a IA para processar os dados
-        return redirect('home')        
-
+        return redirect('home')
     return render(request, "recomendacao/formulario.html")
+
+@login_required(login_url='auth/login')
+def pergunta(request): 
+    if request.method == 'POST':
+        titulo_ = request.POST.get('titulo',None)
+        descricao_ = request.POST.get('descricao',None)
+        link_ = request.POST.get('link',None)
+        user = request.user.username
+        print(titulo_)
+        print(descricao_)
+        print(link_)
+        print(user)
+        rec = Recomendacao(titulo=titulo_, descricao=descricao_,link=link_, usuario=request.user)
+        rec.save()
+
+        print()
+        return redirect('home')
+
+    return render(request, "recomendacao/pergunta.html")
+    
+@login_required(login_url='auth/login')
+def apagarRecomendacao(request, recomendacao_id):
+    _id = request.POST.get('id',None)
+    rec = Recomendacao.objects.filter(id=recomendacao_id).first()
+    rec.delete()
+    return redirect('home')

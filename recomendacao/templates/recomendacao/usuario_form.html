@@ -9,7 +9,7 @@
     <h2>Criar nova conta</h2>
     <a href="{% url 'index' %}">home</a>
     
-    <form method="POST">
+    <form method="POST" action="{% url 'signin' %}">
         {% csrf_token %}
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" placeholder="digite seu primeiro nome" required value={{ nome }}><br>

@@ -7,5 +7,7 @@ urlpatterns = [
     path('auth/logout', logout, name='logout'),
     path('auth/signin', signIn, name='signin'),
     path('home', home, name='home'),
-    path('nova-recomendacao', recomendacao, name='newRecomendation')   
+    path('nova-recomendacao', recomendacao, name='new_recomendation'),  
+    path('pergunta', pergunta, name='pergunta'),
+    path('delete/<recomendacao_id>', apagarRecomendacao, name='delete_recomendation')
 ]
