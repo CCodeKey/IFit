@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Recomendacao
+from .models import Recomendacao, Perfil
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as _login
@@ -31,17 +31,42 @@ def signIn(request):
         nome = request.POST.get('nome',None)
         sobrenome = request.POST.get('sobrenome',None)
         email = request.POST.get('email',None)
+        _telefone = request.POST.get('telefone',None)
+        _cpf = request.POST.get('cpf',None)
+        _dtNascimento = request.POST.get('idade',None)
+        _genero = request.POST.get('sexo',None)
         senha = request.POST.get('password',None)
+    
+        context = {'cpf':_cpf, 'telefone':_telefone, 'email':email}
+        Bcpf = Perfil.objects.filter(cpf=_cpf).first()
 
-        user = User.objects.filter(email=email).first()
-
-        context = {'nome':nome, 'sobrenome':sobrenome, 'password':senha}
-
-        if user:
+        if Bcpf:
+            context['cpf'] = ' CPF inválido!'
+            context['telefone'] = ''
+            context['email'] = ''
             return render(request, "recomendacao/usuario_form.html", context)
         
-        user = User.objects.create_user(username=nome,email= email, password=senha,last_name=sobrenome)
+        BEmail = User.objects.filter(email=email).first()
+        
+        if BEmail:
+            context['cpf'] = ''
+            context['telefone'] = ''
+            context['email'] = ' E-mail inválido!'
+            return render(request, "recomendacao/usuario_form.html", context)
+        
+        BTell = Perfil.objects.filter(telefone=_telefone).first()
+        
+        if BTell:
+            context['cpf'] = ''
+            context['telefone'] = 'N° de Telefone inválido!'
+            context['email'] = ''
+            return render(request, "recomendacao/usuario_form.html", context)
+        
+        user = User.objects.create_user(username=nome, email= email, password=senha, last_name=sobrenome)
         user.save()
+
+        perfil = Perfil(telefone=_telefone, cpf=_cpf, data_de_nascimento=_dtNascimento, genero=_genero, usuario=user)
+        perfil.save()
 
         return redirect('login')
         
@@ -109,3 +134,27 @@ def apagarRecomendacao(request, recomendacao_id):
     rec = Recomendacao.objects.filter(id=recomendacao_id).first()
     rec.delete()
     return redirect('home')
+
+def verificarEmailEEnviarToken(request):
+    if request.method == 'POST':
+        email = request.POST.get('remail',None)
+        user = User.objects.filter(email=email).first()
+        if user:
+            return render(request, "recomendacao/email-recuperar-senha.html")
+        # Enviar Token para o numero do usuario
+        return redirect('verifyToken')
+    return render(request, "recomendacao/email-recuperar-senha.html")
+
+def verificarToken(request):
+    if request.method == 'POST':
+        token = request.POST.get('tokenNumber',None)
+        # Validar se o numero recebido e o numero enviado sao os mesmos
+        return redirect('updatePass')
+    return render(request, "recomendacao/token-recuperar-senha.html")
+
+def atualizarSenha(request):
+    if request.method == 'POST':
+        novaSenha = request.POST.get('reset-senha',None)
+        # Atualizar senha
+        return redirect('login')
+    return render(request, "recomendacao/nova-senha.html")
