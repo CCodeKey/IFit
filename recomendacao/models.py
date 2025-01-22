@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 class Perfil(models.Model):
     telefone = models.CharField(max_length=15)
-    cpf = models.CharField(max_length=11) 
     genero = models.CharField(max_length=7)
     data_de_nascimento = models.CharField(max_length=11) 
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)

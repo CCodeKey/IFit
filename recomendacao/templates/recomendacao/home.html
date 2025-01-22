@@ -8,7 +8,7 @@
 </head>
 <body>
     <h2>Usuário autenticado : {{user}}</h2>
-    <a class="btn btn-success" href="{% url 'new_recomendation' %}">Nova Recomendação</a> <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a> <a class="btn btn-primary" href="{% url 'pergunta' %}">Pergunta</a><br><br>      
+    <a class="btn btn-success" href="{% url 'new_recomendation' %}">Nova Recomendação</a> <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a> <a class="btn btn-primary" href="{% url 'pergunta' %}">Pergunta</a> <a class="btn btn-info" href="{% url 'perfil' %}">Perfil</a><br><br>      
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -28,7 +28,7 @@
       </div>
     </div>      
 
-
+    {% if recomendacoes %}
     <table class="table table-striped">
       <thead>
         <tr>
@@ -40,8 +40,8 @@
           <th scope="col">Usuário</th>
         </tr>
       </thead>
+        
       {% for reco in recomendacoes %}
-        {% if reco.usuario == user %}
           <tbody>
             <tr>
               <th scope="row">{{reco.id}}</th>
@@ -49,13 +49,15 @@
               <td>{{reco.descricao}}</td>
               <td>{{reco.data}}</td>
               <td>{{reco.link}}</td>
-              <td>{{reco.usuario}}</td>
+              <td>{{reco.perfil}}</td>
               <td><a href="delete/{{reco.id}}" class="btn btn-danger">Excluir</a></td>
             </tr>
           </tbody>
-        {% endif %}
       {% endfor %}
     </table>
+    {% else %}
+      <p>! Não há recomendações.</p>
+    {% endif %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 

@@ -32,24 +32,15 @@ def signIn(request):
         sobrenome = request.POST.get('sobrenome',None)
         email = request.POST.get('email',None)
         _telefone = request.POST.get('telefone',None)
-        _cpf = request.POST.get('cpf',None)
         _dtNascimento = request.POST.get('idade',None)
         _genero = request.POST.get('sexo',None)
         senha = request.POST.get('password',None)
     
-        context = {'cpf':_cpf, 'telefone':_telefone, 'email':email}
-        Bcpf = Perfil.objects.filter(cpf=_cpf).first()
+        context = {'telefone':_telefone, 'email':email}
 
-        if Bcpf:
-            context['cpf'] = ' CPF inválido!'
-            context['telefone'] = ''
-            context['email'] = ''
-            return render(request, "recomendacao/usuario_form.html", context)
-        
         BEmail = User.objects.filter(email=email).first()
         
         if BEmail:
-            context['cpf'] = ''
             context['telefone'] = ''
             context['email'] = ' E-mail inválido!'
             return render(request, "recomendacao/usuario_form.html", context)
@@ -57,7 +48,6 @@ def signIn(request):
         BTell = Perfil.objects.filter(telefone=_telefone).first()
         
         if BTell:
-            context['cpf'] = ''
             context['telefone'] = 'N° de Telefone inválido!'
             context['email'] = ''
             return render(request, "recomendacao/usuario_form.html", context)
@@ -65,7 +55,7 @@ def signIn(request):
         user = User.objects.create_user(username=nome, email= email, password=senha, last_name=sobrenome)
         user.save()
 
-        perfil = Perfil(telefone=_telefone, cpf=_cpf, data_de_nascimento=_dtNascimento, genero=_genero, usuario=user)
+        perfil = Perfil(telefone=_telefone, data_de_nascimento=_dtNascimento, genero=_genero, usuario=user)
         perfil.save()
 
         return redirect('login')
@@ -79,7 +69,8 @@ def logout(request):
  
 @login_required(login_url="auth/login")
 def home(request):
-    recomendacao = Recomendacao.objects.all()
+    user = Perfil.objects.filter(usuario=request.user).first()
+    recomendacao = Recomendacao.objects.filter(perfil=user)
     context = {'recomendacoes':recomendacao}
     return render(request, "recomendacao/home.html", context)        
 
@@ -99,12 +90,12 @@ def recomendacao(request):
 
     #     context = {'objetivo':objetivo, 'peso':peso, 'altura':altura}
 
-        titulo_ = request.POST.get('titulo',None)
-        descricao_ = request.POST.get('descricao',None)
-        link_ = request.POST.get('link',None)
+       
 
-        # rec = Recomendacao(titulo=titulo_, descricao=descricao_,link=link_, usuario=request.user)
+        # user = Perfil.objects.filter(usuario=request.user).first()
+        # rec = Recomendacao(titulo=titulo_, descricao=descricao_,link=link_, perfil=user)
         # rec.save()
+
         # Aqui será chamada a IA para processar os dados
         return redirect('home')
     return render(request, "recomendacao/formulario.html")
@@ -115,46 +106,21 @@ def pergunta(request):
         titulo_ = request.POST.get('titulo',None)
         descricao_ = request.POST.get('descricao',None)
         link_ = request.POST.get('link',None)
-        user = request.user.username
-        print(titulo_)
-        print(descricao_)
-        print(link_)
-        print(user)
-        rec = Recomendacao(titulo=titulo_, descricao=descricao_,link=link_, usuario=request.user)
+
+        user = Perfil.objects.filter(usuario=request.user).first()
+        rec = Recomendacao(titulo=titulo_, descricao=descricao_,link=link_, perfil=user)
         rec.save()
 
-        print()
         return redirect('home')
 
     return render(request, "recomendacao/pergunta.html")
-    
+ 
 @login_required(login_url='auth/login')
 def apagarRecomendacao(request, recomendacao_id):
-    _id = request.POST.get('id',None)
     rec = Recomendacao.objects.filter(id=recomendacao_id).first()
     rec.delete()
     return redirect('home')
 
-def verificarEmailEEnviarToken(request):
-    if request.method == 'POST':
-        email = request.POST.get('remail',None)
-        user = User.objects.filter(email=email).first()
-        if user:
-            return render(request, "recomendacao/email-recuperar-senha.html")
-        # Enviar Token para o numero do usuario
-        return redirect('verifyToken')
-    return render(request, "recomendacao/email-recuperar-senha.html")
-
-def verificarToken(request):
-    if request.method == 'POST':
-        token = request.POST.get('tokenNumber',None)
-        # Validar se o numero recebido e o numero enviado sao os mesmos
-        return redirect('updatePass')
-    return render(request, "recomendacao/token-recuperar-senha.html")
-
-def atualizarSenha(request):
-    if request.method == 'POST':
-        novaSenha = request.POST.get('reset-senha',None)
-        # Atualizar senha
-        return redirect('login')
-    return render(request, "recomendacao/nova-senha.html")
+@login_required(login_url='auth/login')
+def perfilUsuario(request):
+    return render(request, "recomendacao/perfil_user.html")
