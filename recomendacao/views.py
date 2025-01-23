@@ -176,9 +176,5 @@ def perfilUsuario(request):
     return render(request, "recomendacao/perfil_user.html", context)
 
 @login_required(login_url='auth/login')
-def alterarSenha(request):
-    return render(request, "recomendacao/perfil_user.html")
-
-@login_required(login_url='auth/login')
 def apagarConta(request):
     return render(request, "recomendacao/perfil_user.html")
