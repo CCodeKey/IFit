@@ -8,7 +8,6 @@ from django.contrib.auth import logout as _logout
 from django.contrib.auth.decorators import login_required
 from datetime import date
 
-
 def index(request):
     return render(request, "recomendacao/index.html")
 
@@ -177,4 +176,6 @@ def perfilUsuario(request):
 
 @login_required(login_url='auth/login')
 def apagarConta(request):
-    return render(request, "recomendacao/perfil_user.html")
+    usuario = User.objects.get(username = request.user)
+    usuario.delete()
+    return redirect('index')
