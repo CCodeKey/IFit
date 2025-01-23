@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as _login
 from django.contrib.auth import logout as _logout
 from django.contrib.auth.decorators import login_required
+from datetime import date
+
 
 def index(request):
     return render(request, "recomendacao/index.html")
@@ -121,6 +123,62 @@ def apagarRecomendacao(request, recomendacao_id):
     rec.delete()
     return redirect('home')
 
+def formatar(data, _telefone):
+    def idade(data_de_nasc):
+        idade = 0
+        current_date = date.today()
+        ano_nascimento = data_de_nasc[:4]
+        mes_nascimento = data_de_nasc[5:7]
+        dia_nascimento = data_de_nasc[8:10]
+
+        ano_actual = current_date.year
+        mes_actual = current_date.month
+        dia_actual = current_date.day
+
+        ano_nascimento = int(ano_nascimento)
+        mes_nascimento = int(mes_nascimento)
+        dia_nascimento = int(dia_nascimento)
+
+        if mes_nascimento == mes_actual:
+            if dia_nascimento == dia_actual or dia_actual > dia_nascimento:
+                idade = ano_actual - ano_nascimento
+            elif dia_actual < dia_nascimento:
+                idade = (ano_actual - ano_nascimento)-1 
+        elif mes_actual < mes_nascimento:
+            idade = (ano_actual - ano_nascimento)-1
+        elif mes_actual > mes_nascimento :
+            idade = ano_actual - ano_nascimento
+        return idade
+    
+    def telefone(numero):
+        operadora = numero[:2]
+        priN = numero[6:7]
+        segN = numero[10:11]
+        _numero = f"({operadora}) ****{priN}-***{segN}"
+        return _numero
+    
+    if _telefone == 0:
+        idade = idade(data)
+        return idade
+    else:
+        numero = telefone(_telefone)
+        return numero
+
 @login_required(login_url='auth/login')
 def perfilUsuario(request):
+    user = User.objects.filter(username=request.user).first()
+    perfil = Perfil.objects.filter(usuario=user).first()
+    
+    data_de_nascimento = str(perfil.data_de_nascimento)
+    numero_de_telefone = str(perfil.telefone)
+
+    context = {'usuario':user, 'perfil':perfil, 'idade':formatar(data_de_nascimento,0), 'telefone':formatar('', numero_de_telefone)}
+    return render(request, "recomendacao/perfil_user.html", context)
+
+@login_required(login_url='auth/login')
+def alterarSenha(request):
+    return render(request, "recomendacao/perfil_user.html")
+
+@login_required(login_url='auth/login')
+def apagarConta(request):
     return render(request, "recomendacao/perfil_user.html")

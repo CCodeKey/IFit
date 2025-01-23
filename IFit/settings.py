@@ -114,9 +114,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_POST = 587
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'ifit.company.tech@gmail.com'
 EMAIL_HOST_PASSWORD = '2025IFit$$'
+
+DEFAULT_FROM_EMAIL = 'ifit.company.tech@gmail.com'

@@ -1,3 +1,14 @@
-<h1>Perfil do usuário</h1>
+<h2>Perfil do @{{user}}</h2>
 
-<a href="{% url 'home' %}">voltar</a>
+<a href="{% url 'home' %}">voltar</a><br><br>
+
+<h3>Informações básicas</h3>
+<p>Nome completo: {{usuario}} {{usuario.last_name}}</p>
+<p>Idade: {{idade}} anos</p>
+<p>E-mail: {{usuario.email}}</p>
+<p>Gênero: {{perfil.genero}}</p>
+<p>Telefone: {{telefone}}</p>
+<p>Senha: <a href="{% url 'change_password' %}">alterar senha</a><p>
+
+<p><a class="btn btn-danger" href="{% url 'logout' %}">Logout</a></p>
+<a href="{% url 'delete_account' %}">Deletar conta</a><br><br>
