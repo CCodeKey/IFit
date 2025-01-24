@@ -77,7 +77,7 @@ def home(request):
 
 @login_required(login_url="auth/login")
 def recomendacao(request):
-    if request.method=='POST':
+    if request.method == 'POST':
     #     idade = request.POST.get('idade',None)
     #     altura = request.POST.get('altura',None)
     #     peso = request.POST.get('peso',None)
@@ -179,3 +179,28 @@ def apagarConta(request):
     usuario = User.objects.get(username = request.user)
     usuario.delete()
     return redirect('index')
+
+@login_required(login_url='auth/login')
+def editarPerfild(request):
+    if request.method == 'POST':
+        Nome = request.POST.get('nome',None)
+        SobreNome = request.POST.get('sobrenome',None)
+        Genero = request.POST.get('sexo',None)
+        Data_de_nascimento = request.POST.get('idade',None)
+        
+        _usua = User.objects.get(username = request.user)
+        _perf = Perfil.objects.get(usuario = _usua)
+
+        _usua.username = Nome
+        _usua.last_name = SobreNome
+        _perf.genero = Genero
+        _perf.data_de_nascimento = Data_de_nascimento
+
+        _usua.save()
+        _perf.save()
+
+        return redirect('perfil')
+
+    return render(request, "recomendacao/update_perfil_user.html")
+    
+

@@ -16,6 +16,7 @@ urlpatterns = [
 
     path('account/profile', perfilUsuario, name='perfil'),
     path('account/delete/user', apagarConta, name='delete_account'),
+    path('account/update/profile', editarPerfild, name='editPerfil'),
     path('account/update/password', auth_views.PasswordChangeView.as_view(template_name='recomendacao/update_password.html'), name='password_change_password'),
     path('account/update/password/success', auth_views.PasswordChangeDoneView.as_view(template_name='recomendacao/update_password_success.html'), name='password_change_done'),
   

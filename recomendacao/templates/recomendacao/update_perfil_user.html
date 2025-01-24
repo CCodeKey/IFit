@@ -1,0 +1,25 @@
+
+<h2>Atualize seus dados</h2>
+
+<p><a href="{% url 'perfil' %}">volar</a></p>
+    
+<form method="POST" action="{% url 'editPerfil' %}">
+    {% csrf_token %}
+    
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" placeholder="digite seu primeiro nome" required value='{{usuario}}'><br>
+
+    <label for="sobrenome">Sobrenome:</label>
+    <input type="text" id="sobrenome" name="sobrenome" placeholder="digite seu sobrenome" required value='{{usuario.last_name}}'><br>
+
+    <label for="sexo">Sexo:</label>
+    <select id="sexo" name="sexo" required>
+      <option value="masculino">Masculino</option>
+      <option value="feminino">Feminíno</option>
+      <option value="other">outro</option>
+    </select><br>
+
+    <label for="dataDeNascimento">Data de Nascimento:</label>
+    <input type="date" id="idade" name="idade" placeholder="20" required><br><br>
+            
+    <button type="submit" value="Submit">salvar</button>
