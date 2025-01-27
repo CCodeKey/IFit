@@ -1,35 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recomendação</title>
-</head>
-<body>
-    <a href="{% url 'home' %}">Home</a><br><br>
+{% extends "recomendacao/home.html" %}
 
-    <div class="home-page">
-        <h1>Sua Recomendação Personalizada</h1>
-        <p><strong>Recomendação:</strong> Treino de hipertrofia com pesos 3x por semana.</p>
-        
-        <h2>Seus Dados:</h2>
-        <ul>
-          <li>Altura: {{altura}}.</li>
-          <li>Peso: {{peso}} Kg.</li>
-          <li>Objetivo: {{objetivo}}.</li>
-        </ul>
-        
-        <h2>O que você gostaria de fazer a seguir?</h2>
-        <button onclick="window.location.href='/plano-treino'">Criar um Plano de Treino</button>
-        
-        <h2>Recursos para Você</h2>
-        <ul>
-          <li><a href="/artigos/treino-iniciante">Dicas de treino para iniciantes</a></li>
-        </ul>
-        
-        <button onclick="window.location.href='{% url 'logout' %}'">Sair</button>
-        
-      </div>
+{% block content %}
 
-</body>
-</html>
+  <title>Recomendação</title>
+  <body>
+      <a href="{% url 'home' %}">Home</a><br><br>
+
+      <div class="home-page">
+          <h3>Sua Recomendação Personalizada</h3>
+            
+          <h1>{{recomendacao.titulo}}</h1>
+          
+
+          <p>{{recomendacao.descricao}}</p>
+
+            
+          <iframe width="560" height="315" src={{recomendacao.link}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          
+          <h3>O que você gostaria de fazer a seguir?</h3>
+          <ul>
+            <li><a href="https://www.justfourcycling.com/post/20-passos-plano-de-treino">Dúvidas para criar um Plano de Treino?</a></li>
+          </ul>
+          
+          <h3>Recursos para Você</h3>
+          <ul>
+            <li><a href="https://querovidaesaude.com/dicas-para-comecar-a-caminhar/#:~:text=Voc%C3%AA%20precisa%20respeitar%20os%20limites,e%2C%20depois%2C%20cinco%20vezes.">Dicas de caminhada para iniciantes</a></li>
+            <li><a href="https://ge.globo.com/eu-atleta/nutricao/post/2024/05/28/como-controlar-a-alimentacao-e-ter-maior-saciedade.ghtml">Como regular a alimentação</a></li>
+          </ul>
+  
+        </div>
+
+  </body>
+
+{% endblock content %}

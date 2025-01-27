@@ -181,7 +181,7 @@ def apagarConta(request):
     return redirect('index')
 
 @login_required(login_url='auth/login')
-def editarPerfild(request):
+def editarPerfil(request):
     if request.method == 'POST':
         Nome = request.POST.get('nome',None)
         SobreNome = request.POST.get('sobrenome',None)
@@ -203,4 +203,8 @@ def editarPerfild(request):
 
     return render(request, "recomendacao/update_perfil_user.html")
     
-
+@login_required(login_url="auth/login")
+def visualizarRecomendacao(request, recomendacao_id):
+    _recomendacao = Recomendacao.objects.filter(id=recomendacao_id).first()
+    context = {'recomendacao':_recomendacao}
+    return render(request, "recomendacao/recomendacao.html", context)  

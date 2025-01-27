@@ -1,0 +1,4 @@
+.env
+poetry.lock
+pyproject.toml
+db.sqlite3

@@ -1,7 +1,11 @@
 {% extends "recomendacao/home.html" %}
 
 {% block content %}
-    <h2>Perfil do @{{user}}</h2>
+    {% if perfil.genero == "masculino" %}
+        <h2>Perfil do @{{user}}</h2>
+    {% else %}
+        <h2>Perfil da @{{user}}</h2>
+    {% endif %}
 
     <a href="{% url 'home' %}">voltar</a><br><br>
     <a href="{% url 'editPerfil' %}">Editar perfil</a><br><br>

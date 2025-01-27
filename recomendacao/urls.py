@@ -10,13 +10,14 @@ urlpatterns = [
     path('auth/logout', logout, name='logout'),
     path('auth/signin', signIn, name='signin'),
 
-    path('recommend/delete/<recomendacao_id>', apagarRecomendacao, name='delete_recommendation'),
-    path('recommend/', recomendacao, name='new_recomendation'),  
+    path('recommend/', recomendacao, name='new_recomendation'),
     path('recommend/pergunta', pergunta, name='pergunta'),
+    path('recommend/view/<recomendacao_id>', visualizarRecomendacao, name='visualization'),
+    path('recommend/delete/<recomendacao_id>', apagarRecomendacao, name='delete_recommendation'),
 
     path('account/profile', perfilUsuario, name='perfil'),
     path('account/delete/user', apagarConta, name='delete_account'),
-    path('account/update/profile', editarPerfild, name='editPerfil'),
+    path('account/update/profile', editarPerfil, name='editPerfil'),
     path('account/update/password', auth_views.PasswordChangeView.as_view(template_name='recomendacao/update_password.html'), name='password_change_password'),
     path('account/update/password/success', auth_views.PasswordChangeDoneView.as_view(template_name='recomendacao/update_password_success.html'), name='password_change_done'),
   
