@@ -2,3 +2,4 @@
 poetry.lock
 pyproject.toml
 db.sqlite3
+/venv
