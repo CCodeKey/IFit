@@ -39,7 +39,7 @@ pip install -r requirements.txt
 ```bash
 python manage.py runserver
 ```
-### Caso não consiga realizar as configurações assima, e prefira uma forma mais simples para executar o projeto:
+### Caso não consiga realizar as configurações acima, e prefira uma forma mais simples para executar o projeto:
 1. Altere as configurações de linkagem do BD:
   - Exclua essa parte no código:
 > Se encontra no arquivo ../IFit/settings.py   |   linha : 65
