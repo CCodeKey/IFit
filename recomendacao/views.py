@@ -15,10 +15,8 @@ def login(request):
     if request.method == 'POST':
         Email = request.POST.get('email',None)
         Senha = request.POST.get('password',None)
-
         nomeUser = User.objects.filter(email=Email).first()
-        user = authenticate(request, username=nomeUser, password=Senha)
-        
+        user = authenticate(request, username=nomeUser, password=Senha)  
         if user is not None:
             _login(request, user)
             return redirect('home')
@@ -26,8 +24,9 @@ def login(request):
            return render(request, "recomendacao/login.html")
     return render(request, "recomendacao/login.html")
 
+# FUNCTION - Validação de dados
 def signIn(request):
-    # Validar esses dados no banco de dados antes salvar
+    # Validar os dados recebidos antes de enviar ao BD
     if request.method == 'POST':
         nome = request.POST.get('nome',None)
         sobrenome = request.POST.get('sobrenome',None)
@@ -55,13 +54,10 @@ def signIn(request):
         
         user = User.objects.create_user(username=nome, email= email, password=senha, last_name=sobrenome)
         user.save()
-
         perfil = Perfil(telefone=_telefone, data_de_nascimento=_dtNascimento, genero=_genero, usuario=user)
         perfil.save()
 
         return redirect('login')
-        
-
     return render(request, "recomendacao/usuario_form.html")
 
 def logout(request):
@@ -75,6 +71,7 @@ def home(request):
     context = {'recomendacoes':recomendacao}
     return render(request, "recomendacao/home.html", context)        
 
+# FUNCTION - Aqui será chamada a IA para processar os dados
 @login_required(login_url="auth/login")
 def recomendacao(request):
     if request.method == 'POST':
@@ -96,24 +93,20 @@ def recomendacao(request):
         # user = Perfil.objects.filter(usuario=request.user).first()
         # rec = Recomendacao(titulo=titulo_, descricao=descricao_,link=link_, perfil=user)
         # rec.save()
-
-        # Aqui será chamada a IA para processar os dados
         return redirect('home')
     return render(request, "recomendacao/formulario.html")
 
+# FUNCTION - Esse método será removido antes de deixar em produção
 @login_required(login_url='auth/login')
 def pergunta(request): 
     if request.method == 'POST':
         titulo_ = request.POST.get('titulo',None)
         descricao_ = request.POST.get('descricao',None)
         link_ = request.POST.get('link',None)
-
         user = Perfil.objects.filter(usuario=request.user).first()
         rec = Recomendacao(titulo=titulo_, descricao=descricao_,link=link_, perfil=user)
         rec.save()
-
         return redirect('home')
-
     return render(request, "recomendacao/pergunta.html")
  
 @login_required(login_url='auth/login')

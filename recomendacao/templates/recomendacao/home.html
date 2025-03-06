@@ -10,7 +10,6 @@
   </head>
   <body>
     {% block content %}
-    <h2>Usuário autenticado : {{user}}</h2>
     <a class="btn btn-success" href="{% url 'new_recomendation' %}">Nova Recomendação</a> <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a> <a class="btn btn-primary" href="{% url 'pergunta' %}">Pergunta</a> <a class="btn btn-info" href="{% url 'perfil' %}">Perfil</a><br><br>      
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -44,7 +43,7 @@
       {% for reco in recomendacoes %}
       <tbody>
         <tr>
-          <td><a id="teste" href="{% url 'visualization' reco.id %}">{{reco.titulo |slice:":25"}}..</a></td>
+          <td><a id="sublinhado" href="{% url 'visualization' reco.id %}">{{reco.titulo |slice:":25"}}..</a></td>
           <td>{{reco.descricao |slice:":40"}}..</td>
           <td>{{reco.data}}</td>
           <td><a href="recommend/delete/{{reco.id}}" class="btn btn-danger">Excluir</a></td>
@@ -53,7 +52,7 @@
       {% endfor %}
     </table>
     {% else %}
-      <p id="nomeP">Não há recomendações ainda.</p>
+      <p id="SemRecomend" >Olá {{user}}, você não possui recomendações ainda!</p>
     {% endif %}
 
     {% endblock content %}
