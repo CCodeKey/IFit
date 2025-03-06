@@ -1,5 +1,5 @@
 # IFit
-Como usar:
-´´´
+Como utilizar:
+```bash
 pip install -r requirements.txt
-´´´
+```
