@@ -75,12 +75,7 @@ python manage.py runserver
    ```bash
       python manage.py migrate
    ```
-3. Por fim, é só executar o projeto:
+3. Por fim, execute o projeto:
 ```bash
 python manage.py runserver
 ```
-
-
-
-
-
