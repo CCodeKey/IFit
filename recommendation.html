@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendação</title>
+    <link rel="stylesheet" href="recommendation.css">
+</head>
+<body>
+    <header>
+      <h1>Informe seus dados</h1>
+      <nav>
+        <a href="index.html" class="nav-button">Voltar</a><br><br>
+      </nav>
+    </header>
+
+    <form method="POST" action="{% url 'new_recomendation' %}">
+        <div class="hide-element">
+        {% csrf_token %}
+        </div>
+       
+        <label for="altura">Altura (cm):</label>
+        <input type="number" id="altura" name="altura" min="50" max="250" required placeholder="ex: 175" autofocus><br>
+       
+        <label for="peso">Peso (kg):</label>
+        <input type="number" id="peso" name="peso" min="20" max="200" required placeholder="ex: 80"><br>
+
+        <label for="nivel_atividade">Nível de Atividade Física:</label>
+        <select id="nivel_atividade" name="nivel_atividade" required>
+          <option value="sedentario">Sedentário</option>
+          <option value="iniciante">Iniciante</option>
+          <option value="intermediario">Intermediário</option>
+          <option value="avancado">Avançado</option>
+        </select><br>
+       
+        <label for="objetivo">Objetivo:</label>
+        <select id="objetivo" name="objetivo" required>
+          <option value="emagrecimento">Emagrecimento</option>
+          <option value="ganho_massa">Ganho de Massa Muscular</option>
+          <option value="condicionamento">Condicionamento Físico</option>
+          <option value="melhora_saude">Melhora Geral da Saúde</option>
+          <option value="outro">Outro</option>
+        </select><br>
+       
+        <label for="restricao">Condições Médicas ou Restrições:</label>
+        <textarea id="restricao" name="restricao" placeholder="Exemplo: Problemas no joelho, hipertensão, etc." rows="3"></textarea><br>
+       
+        <label for="local_treino">Local de Treino Preferido:</label>
+        <select id="local_treino" name="local_treino" required>
+          <option value="academia">Academia</option>
+          <option value="casa">Casa</option>
+          <option value="parque">Parque</option>
+          <option value="outro">Outro</option>
+        </select><br>
+       
+        <label for="duracao_treino">Duração do Treino:</label>
+        <select id="duracao_treino" name="duracao_treino" required>
+          <option value="30">Até 30 minutos</option>
+          <option value="45">Até 45 minutos</option>
+          <option value="60">Até 1 hora</option>
+          <option value="mais">Mais de 1 hora</option>
+        </select><br><br><br>
+       
+        <button type="submit">Gerar Recomendação</button>
+    </form>
+</body>
+</html>
