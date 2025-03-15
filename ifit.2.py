@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
-
+from sklearn.metrics import accuracy_score
 
 # Criando um dataset simulado baseado nas categorias fornecidas
 dados_treinamento = pd.DataFrame([
@@ -57,7 +57,7 @@ dados_treinamento = pd.DataFrame([
       levantamento terra:1 serie de 1-3 repetições com carga maxima.
       desenvolvimento com barra:3 series de 3-5 repetições com carga maxima.
      Observação:Este treino é um exemplo.Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
-     ''',"https://.com"],
+     ''',"https://exemplo.com"],
     
     [35, 175, 65, "Feminino", "Intermediário", "Melhoria Geral da Saúde", "Saudável", "Parque", 90, "Treino Funcional",
      '''O treino funcional trabalha força,resistência,equilibrio,flexibilidade e coordenação motora.
@@ -67,7 +67,7 @@ dados_treinamento = pd.DataFrame([
       Barra fixa: 3 séries de quantas repetições conseguir.
       Saltos em um banco: 3 séries de 10-12 repetições.
       Observação:Este treino é um exemplo.Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
-      ''',"https://"],
+      ''',"https://exemplo.com"],
     
     [50, 165, 58, "Masculino", "Iniciante", "Condicionamento Físico", "Diabetes", "Academia", 45, "Treino de Resistência",
      '''Exercícios de longa duração com baixa carga"
@@ -78,7 +78,7 @@ dados_treinamento = pd.DataFrame([
         Remadas: 3 séries com elástico ou algum peso compatível, com intervalo de 30 segundos. 
         Prancha e Polichinelo: 3 séries de 30 a 45 segundos com intervalo de 15 segundos.
         Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
-        ''',"https://"], 
+        ''',"https://exemplo.com"], 
     
     [60, 170, 70, "Feminino", "Sedentário", "Melhoria Geral da Saúde", "Problemas Cardíacos", "Casa", 50, "Treino de Mobilidade",
      '''Alongamentos e exercícios leves para articulações","o treio de mobilidade é essencial para melhorar a flexibilidade, reduz dores nas articulações e auxilia no em moviemntos do cotidiano.
@@ -89,7 +89,7 @@ dados_treinamento = pd.DataFrame([
          Flexão lateral do tronco: Incline-se suavemente para cada lado, realize 3 séries de 10 repetições.
          Mobilidade do quadril: Coloque as mãos na cintura e faça o movimento de rotação do quadril para frente, para trás, para a direita e para a esquerda, realize 3 séries de 10 repetições.
         Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
-        ''',"https://"],
+        ''',"https://exemplo.com"],
     
     [28, 175, 65, "Feminino", "Intermediário", "Outro", "Problemas na Coluna", "Academia", 70, "Treino de Core", 
      '''Fortalecimento abdominal e lombar para suporte da coluna.
@@ -100,7 +100,7 @@ dados_treinamento = pd.DataFrame([
        Dead Bug: 3 séries de 10 repetições para cada lado(Fortalece o core e melhora a coordenação).
        Prancha Lateral: 3 séries de 30 segundos(Fortalece o Obliquos e os estabilizadores laterais).
        Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos. Se possivel, consulte um profissional de educação fisica para orientação personalizada.,
-       ''',"https://" ],
+       ''',"https://exemplo.com" ],
     
     [26, 180, 75, "Masculino", "Avançado", "Condicionamento Físico", "Saudável", "Parque", 60, "Treino de condicionamento fisico", 
      '''Treino intervalado de alta intensidade para explosão muscular.
@@ -111,10 +111,11 @@ dados_treinamento = pd.DataFrame([
          Flexões: Máximo de repetições possíveis em 30 segundos, seguido de 30 segundos de descanso (repetir 4 vezes).
           Barra fixa: Máximo de repetições possíveis, seguido de 1 minuto de descanso, repetir 3 vezes.
           Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos. Se possivel, consulte um profissional de educação fisica para orientação personalizada.,
-          ''',"https://"],
+          ''',"https://exemplo.com"],
     
     [45, 180, 78, "Feminino", "Avançado", "Condicionamento Físico", "Saudável", "Academia", 80, "Treino de alta intencidade", 
      '''Plano adaptado às necessidades individuais.
+
        treino:
         Aquecimento: Pular corda por 3 minutos(descansa 45 segundos). Polichinelos com saltos por 30 segundos(Descansa 30 segundos). Agachamentos livre 15 repetições(descansa 30 segundos).
          Burpees com salto na caixa:3 séries de 10 repetições(Descansa 30 segundos entre as séries e para o próximo exercício). 
@@ -123,7 +124,7 @@ dados_treinamento = pd.DataFrame([
          Prancha com rotação de quadril: 3 séries de 20 repetições - 10 para cada lado (Descansa 30 segundos entre as séries).
          Sprints na esteira (ou bike): 8 séries de 20 segundos de sprint máximo, 10 segundos de descanso.
          Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos. Se possivel, consulte um profissional de educação fisica para orientação personalizada.,
-         ''',"https://"],
+         ''',"https://exemplo.com"],
     
 ],  columns=["Idade", "Altura", "Peso", "Sexo", "Nível Atividade", "Objetivo", "Condição Médica", "Local Treino", "Duração", "Método Treino", "Descrição","link"])
 
