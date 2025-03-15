@@ -1,101 +1,220 @@
 
 import numpy as np
+import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
 
-# Dados de treinamento ajustados (15 exemplos para 15 categorias)
-dados_treinamento = np.array([
-    [25, 170, 60, 2, 3, 0, 0, 1, 60],
-    [30, 180, 70, 2, 4, 1, 2, 3, 90],
-    [20, 160, 50, 1, 2, 0, 0, 1, 30],
-    [40, 190, 80, 2, 5, 0, 1, 4, 60],
-    [35, 175, 65, 1, 3, 1, 4, 1, 90],
-    [28, 165, 58, 2, 2, 2, 1, 4, 45],
-    [22, 170, 55, 1, 3, 0, 2, 2, 50],
-    [38, 185, 85, 2, 4, 1, 3, 1, 70],
-    [26, 175, 67, 1, 2, 3, 5, 2, 40],
-    [45, 180, 78, 2, 5, 4, 6, 2, 80],
-    [32, 168, 60, 1, 3, 1, 7, 1, 60],
-    [29, 175, 73, 2, 4, 2, 2, 4, 90],
-    [50, 178, 80, 2, 5, 3, 3, 1, 75],
-    [24, 165, 54, 1, 1, 0, 8, 3, 30],
-    [36, 182, 77, 2, 4, 4, 1, 2, 85]
-])
 
-# Criando etiquetas de treinamento (0 a 14)
-etiquetas_treinamento = np.arange(15)  
+# Criando um dataset simulado baseado nas categorias fornecidas
+dados_treinamento = pd.DataFrame([
+    [25, 170, 60, "Masculino", "Iniciante", "Emagrecimento", "Saudável", "Academia", 60, "Treino de Força",
+     '''começe com um aquecimento,faça uma caminhada de 10 minutos e logo em seguida faça 3 series de polichinelos com duas a cinco repetiçôes.
+     agachamentos:3 series de 10-12 repetições.
+     flexões:3 series ate a falha.
+     Remana com halteres:3 séries de 10-12 repetições.
+     prancha:3 séries,segurando por 15 segundos.
+     elevação de panturilhas:3 séries de 15-20 repetições.
+     faça esse treino 3 vezes por semana,com descanso de 1 dia entre os treinos.,
+      ''',"https://exemplo.com"],
+    
+    [30, 180, 70, "Masculino", "Intermediário", "Ganho de Massa Muscular", "Saudável", "Academia", 90, "Treino de Hipertrofia",
+     '''dia 1:superior(peito/triceps/ombros)
+      supino reto:3 séries de 8-12 repetições.
+      treino com halteres:3 séries de 10-15 repetições.
+      dia 2:inferior(pernas/panturrilhas)
+      agachamento livre:3 séries de 8-12 repetições.
+      leg press:3 series de 10-15 repetições.
+      panturrilha em pé:3 séries de 15-20 repetições.
+      dia 3:costas/biceps
+      barra fixa: 3 séries ate a falha.
+      remada curvada:3 séries de 8-12 repetições.
+      Rosca direita com barra:3 séries de 8-12 repetições.
+      Rosca martelo:3 series de 10-15 repetições.
+      Observação:Este treino é um exemplo.Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
+      ''',"https://exemplo.com"],
+    
+    [20, 160, 50, "Feminino", "Sedentário", "Emagrecimento", "Saudável", "Casa", 30, "Treino Cardio",
+     '''aquecimento(5 minutos) caminhada leve no lugar:2 minutos,elevando os joelhos gradualmente.
+      rotação de braços e pernas:1 minuto para frente e 1 minuto para tras.
+      alongamento suave dos principais grupos musculares.
+      treino(3 vezes por semana,com descanço de 1 dia entre os treinos)
+      caminhada:20-30 minutos em ritmo moderado.
+      polichinelos:3 séries de 15 repetições.
+      Observação:Este treino é um exemplo.Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
+      ''',"https://exemplo.com"],
+    
+    [40, 190, 80, "Masculino", "Avançado", "Ganho de Massa Muscular", "Saudável", "Academia", 60, "Treino de Força Máxima",
+     '''caracteristicas do treino:
+      Cargas elevadas:utiliza-se pesos proximos ou iguais a sua 1RM(uma repetição maxima).
+      baixas repetições:geralmente 1 a 5 repetições por serie.
+      longos periodos de descanço:3 a 5 minutos entre as séries para recuperação completa.
+      tecnica impecavel:A forma correta é crucial para evitar lesões e maximizar os resultados.
+      TREINO:
+      aquecimento:10-15 minutos de cardio leve e alongamentos dinâmicos.
+      agachamento livre:3 series de 3-6 repetições com carga maxima.
+      supino reto:3 séries de 3-5 repetições com carga maxima.
+      levantamento terra:1 serie de 1-3 repetições com carga maxima.
+      desenvolvimento com barra:3 series de 3-5 repetições com carga maxima.
+     Observação:Este treino é um exemplo.Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
+     ''',"https://.com"],
+    
+    [35, 175, 65, "Feminino", "Intermediário", "Melhoria Geral da Saúde", "Saudável", "Parque", 90, "Treino Funcional",
+     '''O treino funcional trabalha força,resistência,equilibrio,flexibilidade e coordenação motora.
+      Treino:
+      Aquecimento: 5-10 minutos de caminhada leve, corrida e alongamentos dinâmicos.
+      Agachamentos: 3 séries de 10-12 repetições.Flexões em um banco: 3 séries de quantas repetições conseguir.
+      Barra fixa: 3 séries de quantas repetições conseguir.
+      Saltos em um banco: 3 séries de 10-12 repetições.
+      Observação:Este treino é um exemplo.Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
+      ''',"https://"],
+    
+    [50, 165, 58, "Masculino", "Iniciante", "Condicionamento Físico", "Diabetes", "Academia", 45, "Treino de Resistência",
+     '''Exercícios de longa duração com baixa carga"
+     , "O treino de resistência desenvolve um bom condicionamento físico, conbinado com o ganho de força e controle glicêmico.
+       Treino: 
+       Agachamento: 3 séries com duração de 30 segundos com um intervalo de 15 segundos. 
+       Flexões: 3 séries até a falha com intervalo de 30 segundos.
+        Remadas: 3 séries com elástico ou algum peso compatível, com intervalo de 30 segundos. 
+        Prancha e Polichinelo: 3 séries de 30 a 45 segundos com intervalo de 15 segundos.
+        Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
+        ''',"https://"], 
+    
+    [60, 170, 70, "Feminino", "Sedentário", "Melhoria Geral da Saúde", "Problemas Cardíacos", "Casa", 50, "Treino de Mobilidade",
+     '''Alongamentos e exercícios leves para articulações","o treio de mobilidade é essencial para melhorar a flexibilidade, reduz dores nas articulações e auxilia no em moviemntos do cotidiano.
+    Treino: 
+       Aquecimento: 5-10 minutos de csminhada no ambiente.
+       Alongamento na cadeira: Sente-se e estique as pernas alternando em 3 séries de 10 repetições.
+        Mobilidade de ombro: Elevação e rotação dos ombros para frente e para trás, faça 3 séries de 10 repetições.
+         Flexão lateral do tronco: Incline-se suavemente para cada lado, realize 3 séries de 10 repetições.
+         Mobilidade do quadril: Coloque as mãos na cintura e faça o movimento de rotação do quadril para frente, para trás, para a direita e para a esquerda, realize 3 séries de 10 repetições.
+        Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
+        ''',"https://"],
+    
+    [28, 175, 65, "Feminino", "Intermediário", "Outro", "Problemas na Coluna", "Academia", 70, "Treino de Core", 
+     '''Fortalecimento abdominal e lombar para suporte da coluna.
+      Treino:
+       Aquecimento: 5 minutos de caminhada leve na esteira.
+       Prancha: 3 séries de 30 a 60 segundos(Fortalece o core).
+       Ponte: 3 séries de 15 a 20 repetições(Fortalece glúteos e lombar).
+       Dead Bug: 3 séries de 10 repetições para cada lado(Fortalece o core e melhora a coordenação).
+       Prancha Lateral: 3 séries de 30 segundos(Fortalece o Obliquos e os estabilizadores laterais).
+       Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos. Se possivel, consulte um profissional de educação fisica para orientação personalizada.,
+       ''',"https://" ],
+    
+    [26, 180, 75, "Masculino", "Avançado", "Condicionamento Físico", "Saudável", "Parque", 60, "Treino de condicionamento fisico", 
+     '''Treino intervalado de alta intensidade para explosão muscular.
+       Treino:
+        Aquecimento : Polichinelos por 60 segundos. Rotação de braços por 30 segundos. Agachamento livre 30 repetições.
+         Sprints em subida: 30 segundos de sprint máximo, 30 segundos de descanso (repetir 6 vezes). 
+         Saltos no banco do parque: 10 repetições, seguido de 30 segundos de descanso (repetir 4 vezes). 
+         Flexões: Máximo de repetições possíveis em 30 segundos, seguido de 30 segundos de descanso (repetir 4 vezes).
+          Barra fixa: Máximo de repetições possíveis, seguido de 1 minuto de descanso, repetir 3 vezes.
+          Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos. Se possivel, consulte um profissional de educação fisica para orientação personalizada.,
+          ''',"https://"],
+    
+    [45, 180, 78, "Feminino", "Avançado", "Condicionamento Físico", "Saudável", "Academia", 80, "Treino de alta intencidade", 
+     '''Plano adaptado às necessidades individuais.
+       treino:
+        Aquecimento: Pular corda por 3 minutos(descansa 45 segundos). Polichinelos com saltos por 30 segundos(Descansa 30 segundos). Agachamentos livre 15 repetições(descansa 30 segundos).
+         Burpees com salto na caixa:3 séries de 10 repetições(Descansa 30 segundos entre as séries e para o próximo exercício). 
+         Agachamento com barra (peso desafiador): 3 séries de 12 repetições(Descansa 30 segundos entre as séries e para o próximo exercício). 
+         Remada alta: 3 séries de 15 repetições(Descansa 30 segundos entre as séries e para o próximo exercício). 
+         Prancha com rotação de quadril: 3 séries de 20 repetições - 10 para cada lado (Descansa 30 segundos entre as séries).
+         Sprints na esteira (ou bike): 8 séries de 20 segundos de sprint máximo, 10 segundos de descanso.
+         Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos. Se possivel, consulte um profissional de educação fisica para orientação personalizada.,
+         ''',"https://"],
+    
+],  columns=["Idade", "Altura", "Peso", "Sexo", "Nível Atividade", "Objetivo", "Condição Médica", "Local Treino", "Duração", "Método Treino", "Descrição","link"])
 
-# Divisão dos dados em treinamento e teste
-X_train, X_test, y_train, y_test = train_test_split(
-    dados_treinamento, etiquetas_treinamento, test_size=0.2, random_state=42
-)
+# Transformando dados categóricos em números
+label_encoders = {}
+for col in ["Sexo", "Nível Atividade", "Objetivo", "Condição Médica", "Local Treino", "Método Treino"]:
+    le = LabelEncoder()
+    dados_treinamento[col] = le.fit_transform(dados_treinamento[col])
+    label_encoders[col] = le
 
-# Normalização dos dados
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
+# Separando os dados de entrada e saída
+X = dados_treinamento.drop(columns=["Método Treino", "Descrição","link"])
+y = dados_treinamento["Método Treino"]
 
-# Criação e treinamento do modelo
-modelo = LogisticRegression(max_iter=1000)
+
+# Divisão treino/teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Modelo de Machine Learning (Random Forest)
+modelo = RandomForestClassifier(n_estimators=100, random_state=42)
 modelo.fit(X_train, y_train)
 
-# Avaliação do modelo
-y_pred = modelo.predict(X_test)
-acuracia = accuracy_score(y_test, y_pred)
-print(f"Acurácia do modelo: {acuracia:.2f}")
 
-# Coleta de dados do usuário com validação
-def entrada_usuario_valida(mensagem, tipo=int, minimo=None, maximo=None):
+
+
+
+# Função para entrada do usuário
+def entrada_usuario_valida(mensagem, tipo=str, opcoes=None):
     while True:
-        try:
-            valor = tipo(input(mensagem))
-            if minimo is not None and valor < minimo:
-                raise ValueError(f"Digite um valor maior ou igual a {minimo}.")
-            if maximo is not None and valor > maximo:
-                raise ValueError(f"Digite um valor menor ou igual a {maximo}.")
+        valor = input(mensagem).strip()
+        if tipo == int:
+            try:
+                return int(valor)
+            except ValueError:
+                print("Por favor, insira um número válido.")
+        elif opcoes:
+            valor_lower = valor.lower()
+            opcoes_lower = [op.lower() for op in opcoes]
+            if valor_lower in opcoes_lower:
+                return opcoes[opcoes_lower.index(valor_lower)]  # Retorna na formatação original
+            else:
+                print(f"Opção inválida. Escolha entre: {', '.join(opcoes)}")
+        else:
             return valor
-        except ValueError as e:
-            print(f"Entrada inválida: {e}")
 
-idade = entrada_usuario_valida("Digite sua idade: ", int, 10, 100)
-altura = entrada_usuario_valida("Digite sua altura (em cm): ", int, 100, 250)
-peso = entrada_usuario_valida("Digite seu peso (em kg): ", int, 30, 200)
-sexo = entrada_usuario_valida("Digite seu sexo (1 = Masculino, 2 = Feminino): ", int, 1, 2) - 1
-nivel_atividade = entrada_usuario_valida("Digite seu nível de atividade física (1 a 5): ", int, 1, 5)
-objetivo = entrada_usuario_valida("Digite seu objetivo (0 a 4): ", int, 0, 4)
-condicoes_medicas = entrada_usuario_valida("Digite suas condições médicas (0 a 8): ", int, 0, 8)
-local_treino = entrada_usuario_valida("Digite seu local de treino (1 a 4): ", int, 1, 4) - 1
-duracao_treino = entrada_usuario_valida("Digite a duração do seu treino (em minutos): ", int, 10, 180)
+# Coletando dados do usuário
+idade = entrada_usuario_valida("Digite sua idade: ", int)
 
-# Normalização da entrada do usuário
-entrada_usuario = scaler.transform([[idade, altura, peso, sexo, nivel_atividade, objetivo, condicoes_medicas, local_treino, duracao_treino]])
+altura = entrada_usuario_valida("Digite sua altura (em cm): ", int)
 
-# Previsão do método de treino
-def prever_metodo_treino():
-    previsao = modelo.predict(entrada_usuario)
-    return min(max(previsao[0], 0), 14)  # Garante que esteja entre 0 e 14
+peso = entrada_usuario_valida("Digite seu peso (em kg): ", int)
 
-# Métodos de treino organizados
-metodos_treino = {
-    0: "Treino de força para iniciantes: exercícios básicos para musculatura.",
-    1: "Treino de força para intermediários: carga moderada e progressão.",
-    2: "Treino de força para avançados: cargas altas e técnicas avançadas.",
-    3: "Treino de condicionamento físico para iniciantes: caminhadas e aeróbicos leves.",
-    4: "Treino de condicionamento físico para intermediários: corridas curtas, circuitos funcionais.",
-    5: "Treino de condicionamento físico para avançados: treinos intervalados intensos.",
-    6: "Treino de resistência para iniciantes: exercícios básicos de resistência muscular.",
-    7: "Treino de resistência para intermediários: aumento gradual da carga e tempo sob tensão.",
-    8: "Treino de resistência para avançados: treinos com alta repetição e baixa recuperação.",
-    9: "Treino de flexibilidade e mobilidade: melhora da amplitude de movimento.",
-    10: "Treino de equilíbrio e coordenação: foco na estabilidade corporal.",
-    11: "Treino funcional de alta intensidade: mistura de resistência, força e cardio.",
-    12: "Treino de calistenia: fortalecimento com exercícios de peso corporal.",
-    13: "Treino de ioga e pilates: fortalecimento, alongamento e equilíbrio mental.",
-    14: "Treino personalizado com acompanhamento profissional."
-}
+sexo = entrada_usuario_valida("Digite seu sexo (Masculino ou Feminino): ", str, ["Masculino", "Feminino"])
 
-# Exibição do resultado
-metodo_treino = prever_metodo_treino()
-print(f"\nO método de treino ideal para você é:\n{metodos_treino[metodo_treino]}")
+nivel_atividade = entrada_usuario_valida("Digite seu nível de atividade física (Sedentário, Iniciante, Intermediário, Avançado): ", str, ["Sedentário", "Iniciante", "Intermediário", "Avançado"])
+
+objetivo = entrada_usuario_valida("Digite seu objetivo:\nEmagrecimento\n Ganho de Massa Muscular\n Condicionamento Físico\n Melhoria Geral da Saúde\n Outro\n): ", str, ["Emagrecimento", "Ganho de Massa Muscular", "Condicionamento Físico", "Melhoria Geral da Saúde", "Outro"])
+
+condicao_medica = entrada_usuario_valida("Digite sua condição médica:\nSaudável\n Lesões Musculares ou Articulares\n Problemas Cardíacos\n Diabetes\n Asma ou Problemas Respiratórios\n Deficiências Nutricionais\n Problemas na Coluna): ", str, ["Saudável", "Lesões Musculares ou Articulares", "Problemas Cardíacos", "Diabetes", "Asma ou Problemas Respiratórios", "Deficiências Nutricionais", "Problemas na Coluna"])
+
+local_treino = entrada_usuario_valida("Digite seu local de treino (Academia, Casa, Parque, Outro): ", str, ["Academia", "Casa", "Parque", "Outro"])
+
+duracao_treino = entrada_usuario_valida("Digite a duração do seu treino (em minutos): ", int)
+
+# Convertendo entrada do usuário para formato do modelo
+entrada_usuario = np.array([
+    idade, altura, peso,
+    label_encoders["Sexo"].transform([sexo])[0],
+    label_encoders["Nível Atividade"].transform([nivel_atividade])[0],
+    label_encoders["Objetivo"].transform([objetivo])[0],
+    label_encoders["Condição Médica"].transform([condicao_medica])[0],
+    label_encoders["Local Treino"].transform([local_treino])[0],
+    duracao_treino
+]).reshape(1, -1)
+
+# Criando o dicionário para associar as codificações numéricas aos métodos, descrições e links
+
+descricao_treino = dict(zip(dados_treinamento["Método Treino"], dados_treinamento["Descrição"]))
+link_treino = dict(zip(dados_treinamento["Método Treino"], dados_treinamento["link"]))
+
+# Função para obter o treino recomendado
+previsao_codificada = modelo.predict(entrada_usuario)[0]
+
+# Verifique a previsão e use diretamente a chave codificada
+if previsao_codificada in descricao_treino:
+    descricao = descricao_treino[previsao_codificada]
+    link = link_treino[previsao_codificada]
+
+    # Realize a inversão para o nome do método de treino
+    metodo_treino = label_encoders["Método Treino"].inverse_transform([previsao_codificada])[0]
+
+    print(f"\nO método de treino ideal para você é: {metodo_treino}\nDescrição: {descricao}\nClique no link para ver um vídeo sobre o treino: {link}")
+else:
+    print("Erro: O método de treino previsto não foi encontrado nos dados.")
