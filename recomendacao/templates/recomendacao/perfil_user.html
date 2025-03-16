@@ -13,9 +13,9 @@
     
     <div class="container">
         {% if perfil.genero == "masculino" %}
-        <h2>Perfil do @{{user}}</h2>
+        <h2>Perfil do @{{user.first_name}}</h2>
         {% else %}
-            <h2>Perfil da @{{user}}</h2>
+            <h2>Perfil da @{{user.first_name}}</h2>
         {% endif %}
         <table id="perfil-tabela" class="table p-5">
             <thead>
@@ -30,7 +30,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{usuario}} {{usuario.last_name}}</td>
+                    <td>{{usuario.first_name}} {{usuario.last_name}}</td>
                     <td>{{idade}} anos</td>
                     <td>{{usuario.email}}</td>
                     <td>{{perfil.genero}}</td>

@@ -15,8 +15,8 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
         prancha:3 séries,segurando por 15 segundos.
         elevação de panturilhas:3 séries de 15-20 repetições.
         faça esse treino 3 vezes por semana,com descanso de 1 dia entre os treinos.,
-        ''',"https://exemplo.com"],
-        
+        ''',"https://www.youtube.com/embed/I_x5V2ZQ1UI?si=NE4fc6o4L2FoTCbR"],
+
         [30, 180, 70, "masculino", "intermediario", "ganhar_massa_muscular", "saudavel", "academia", 90, "Treino de Hipertrofia",
         '''dia 1:superior(peito/triceps/ombros)
         supino reto:3 séries de 8-12 repetições.
@@ -31,8 +31,8 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
         Rosca direita com barra:3 séries de 8-12 repetições.
         Rosca martelo:3 series de 10-15 repetições.
         Observação:Este treino é um exemplo.Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
-        ''',"https://exemplo.com"],
-        
+        ''',"https://www.youtube.com/embed/f7dxF1o6-4Q?si=cjEWXNwah-vTQDkZ"],
+
         [20, 160, 50, "feminino", "sedentario", "emagrecimento", "saudavel", "casa", 30, "Treino Cardio",
         '''aquecimento(5 minutos) caminhada leve no lugar:2 minutos,elevando os joelhos gradualmente.
         rotação de braços e pernas:1 minuto para frente e 1 minuto para tras.
@@ -41,8 +41,8 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
         caminhada:20-30 minutos em ritmo moderado.
         polichinelos:3 séries de 15 repetições.
         Observação:Este treino é um exemplo.Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
-        ''',"https://exemplo.com"],
-        
+        ''',"https://www.youtube.com/embed/Gs7H9oRGeiY?si=3nOhahtYq61nBdMs"],
+ 
         [40, 190, 80, "masculino", "avancado", "ganhar_massa_muscular", "saudavel", "academia", 60, "Treino de Força Máxima",
         '''caracteristicas do treino:
         Cargas elevadas:utiliza-se pesos proximos ou iguais a sua 1RM(uma repetição maxima).
@@ -56,7 +56,7 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
         levantamento terra:1 serie de 1-3 repetições com carga maxima.
         desenvolvimento com barra:3 series de 3-5 repetições com carga maxima.
         Observação:Este treino é um exemplo.Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
-        ''',"https://exemplo.com"],
+        ''',"https://www.youtube.com/embed/X3n9JMml6Yg?si=rkQB4e9iY9vpK-C1"],
         
         [35, 175, 65, "feminino", "intermediario", "melhora_na_saude", "saudavel", "parque", 90, "Treino Funcional",
         '''O treino funcional trabalha força,resistência,equilibrio,flexibilidade e coordenação motora.
@@ -66,8 +66,8 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
         Barra fixa: 3 séries de quantas repetições conseguir.
         Saltos em um banco: 3 séries de 10-12 repetições.
         Observação:Este treino é um exemplo.Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
-        ''',"https://exemplo.com"],
-        
+        ''',"https://www.youtube.com/embed/ZTayrPRBD8s?si=lKVsBkXb1ZLI5z_6"],
+
         [50, 165, 58, "masculino", "iniciante", "condicionamento", "diabetes", "academia", 45, "Treino de Resistência",
         '''Exercícios de longa duração com baixa carga"
         , "O treino de resistência desenvolve um bom Condicionamento Físico, conbinado com o ganho de força e controle glicêmico.
@@ -77,8 +77,8 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
             Remadas: 3 séries com elástico ou algum peso compatível, com intervalo de 30 segundos. 
             Prancha e Polichinelo: 3 séries de 30 a 45 segundos com intervalo de 15 segundos.
             Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
-            ''',"https://exemplo.com"], 
-        
+            ''',"https://www.youtube.com/embed/hHYXLiSUsCg?si=oy_9wa-2vEzPtgu1"], 
+
         [60, 170, 70, "feminino", "sedentario", "melhora_na_saude", "problemas_cardiacos", "casa", 50, "Treino de Mobilidade",
         '''Alongamentos e exercícios leves para articulações","o treio de mobilidade é essencial para melhorar a flexibilidade, reduz dores nas articulações e auxilia no em moviemntos do cotidiano.
         Treino: 
@@ -88,7 +88,7 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
             Flexão lateral do tronco: Incline-se suavemente para cada lado, realize 3 séries de 10 repetições.
             Mobilidade do quadril: Coloque as mãos na cintura e faça o movimento de rotação do quadril para frente, para trás, para a direita e para a esquerda, realize 3 séries de 10 repetições.
             Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos.Se possivel,consulte um profissional de educação fisica para orientação personalizada.,
-            ''',"https://exemplo.com"],
+            ''',"https://www.youtube.com/embed/l2LLLdRdfuA?si=Y3BIYmAtQ0az7I-r"],
         
         [28, 175, 65, "feminino", "intermediario", "outro", "coluna", "academia", 70, "Treino de Core", 
         '''Fortalecimento abdominal e lombar para suporte da coluna.
@@ -99,8 +99,8 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
         Dead Bug: 3 séries de 10 repetições para cada lado(Fortalece o core e melhora a coordenação).
         Prancha Lateral: 3 séries de 30 segundos(Fortalece o Obliquos e os estabilizadores laterais).
         Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos. Se possivel, consulte um profissional de educação fisica para orientação personalizada.,
-        ''',"https://exemplo.com" ],
-        
+        ''',"https://www.youtube.com/embed/2rhE67qpFT4?si=9gRsnJ2UmpYQnaz8" ],
+
         [26, 180, 75, "masculino", "avancado", "condicionamento", "saudavel", "parque", 60, "Treino de condicionamento fisico", 
         '''Treino intervalado de alta intensidade para explosão muscular.
         Treino:
@@ -110,8 +110,8 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
             Flexões: Máximo de repetições possíveis em 30 segundos, seguido de 30 segundos de descanso (repetir 4 vezes).
             Barra fixa: Máximo de repetições possíveis, seguido de 1 minuto de descanso, repetir 3 vezes.
             Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos. Se possivel, consulte um profissional de educação fisica para orientação personalizada.,
-            ''',"https://exemplo.com"],
-        
+            ''',"https://www.youtube.com/embed/z6udtSfTygE?si=HdzhbBPH_9nSJaQ9"],
+
         [45, 180, 78, "feminino", "avancado", "condicionamento", "saudavel", "academia", 80, "Treino de alta intencidade", 
         '''Plano adaptado às necessidades individuais.
 
@@ -123,8 +123,9 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
             Prancha com rotação de quadril: 3 séries de 20 repetições - 10 para cada lado (Descansa 30 segundos entre as séries).
             Sprints na esteira (ou bike): 8 séries de 20 segundos de sprint máximo, 10 segundos de descanso.
             Observação:Este treino é um exemplo. Ajuste-o de acordo com suas necessidades e objetivos. Se possivel, consulte um profissional de educação fisica para orientação personalizada.,
-            ''',"https://exemplo.com"],
-        
+            ''',"https://www.youtube.com/embed/zbN3mChHGDI?si=ZS9TksEsie8EgJag"],
+
+
     ],  columns=["Idade", "Altura", "Peso", "Sexo", "Nível Atividade", "Objetivo", "Condição Médica", "Local Treino", "Duração", "Método Treino", "Descrição","link"])
 
     # Transformando dados categóricos em números

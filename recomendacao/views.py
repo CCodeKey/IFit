@@ -52,7 +52,7 @@ def signIn(request):
             context['email'] = ''
             return render(request, "recomendacao/usuario_form.html", context)
         
-        user = User.objects.create_user(username=f"{nome}_{sobrenome}", email= email, password=senha, last_name=sobrenome)
+        user = User.objects.create_user(username=f"{nome}_{sobrenome}_:{_telefone}", email= email, password=senha, first_name=nome, last_name=sobrenome)
         user.save()
         
         perfil = Perfil(telefone=_telefone, data_de_nascimento=_dtNascimento, genero=_genero, usuario=user)
@@ -170,7 +170,7 @@ def editarPerfil(request):
         _usua = User.objects.get(username = request.user)
         _perf = Perfil.objects.get(usuario = _usua)
 
-        _usua.username = f"{Nome}_{SobreNome}"
+        _usua.first_name = Nome
         _usua.last_name = SobreNome
         _perf.genero = Genero
         _perf.data_de_nascimento = Data_de_nascimento
