@@ -1,0 +1,59 @@
+body{
+    background-color: black;
+    color: gold;
+}
+
+.container {
+    padding: 2%;
+}
+
+.nav-button-voltar {
+    color: gold;
+    text-decoration: none;
+    background-color: black;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 2px solid gold;
+    transition: background-color 0.3s;
+    width: 5.5%;
+}
+
+.nav-button-voltar:hover {
+    background-color: gold;
+    color: black;
+} 
+
+#perfil-tabela {
+    background-color: black;
+    border-radius: 10px;
+    overflow: hidden;
+    color: gold;
+}
+
+#perfil-tabela th {
+    background-color: gold;
+    border: 1px solid gold;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+    color: black;
+}
+
+#perfil-tabela td {
+    background-color: black;
+    border: 1px solid gold;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: gold;
+}
+
+#editar-perfil {
+    float: right;
+}
+
+#logout, #deletar-conta {
+    text-align: center;
+}

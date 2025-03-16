@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: gold;
+    margin: 0;
+    padding: 0px;
+}
+
+.nav-button-voltar {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: gold;
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: background-color 0.3s;
+    width: 5.5%;
+}
+
+.header {
+    background-color: gold;
+    color: black;
+    padding: 20px;
+    font-size: 24px;
+}
+
+a {
+    color: gold;
+    font-size: 18px;
+    margin: 10px;
+    display: inline-block;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#reco-titulo, #reco-desc {
+    text-align: center;
+}
+
+#reco-desc {
+    font-size: 22px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+}
+
+#reco-link {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+}
+
+.reco-extra {
+    width: 60%;
+}

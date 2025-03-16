@@ -1,13 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IFit</title>
-</head>
+{% extends "recomendacao/home.html" %}
+{% load static %}
+{% block content%}
+    <head>
+        <title>IFit</title>
+            {% block link %}
+            <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" media="screen" />
+            {% endblock link %}
+        <link rel="stylesheet" href="index.css">
+        <script href="{% static 'js/script.js' %}" defer></script>
+    </head>
 <body>
-    <h2>Página inicial</h2>
-    <a href="{% url 'login' %}">Entrar</a><br>
-    <a href="{% url 'signin' %}">Criar conta</a>
-</body>
-</html>
+    <header class="container p-5">
+        <div class="row">
+            <h1 class="col-1">IFit</h1>
+            <nav class="col offset-8">
+                <ul>
+                    <li><a href="{% url 'login' %}" class="nav-button">Login</a></li>
+                    <li><a href="{% url 'signin' %}" class="nav-button">Sign In</a></li>            
+                </ul>
+            </nav>    
+        </div>
+    </header>
+    <section class="hero">
+        <h2>Bem Vindo ao IFit</h2>
+    </section>
+    <main class="container">
+        <section class="section">
+            <h2>Sobre Nós</h2>
+            <p>Fornecemos serviços de alta qualidade para nossos clientes</p>
+        </section>
+        <section class="section">
+            <h2>Nossos Serviços</h2>
+            <p>Oferecemos soluções para os seus objetivos</p>
+        </section>
+        <section class="section">
+            <h2>Entre em contato</h2>
+            <a href="mailto:ifit.company.tech@gmail.com" target="_blank" class="btn m-2" id="contactButton">Fale Conosco</a>
+        </section>
+    </main>
+    <footer>
+        <p>&copy;2025 IFit. Todos os direitos reservados</p>
+    </footer>
+{% endblock content %}

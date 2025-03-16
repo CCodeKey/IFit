@@ -11,7 +11,6 @@ urlpatterns = [
     path('auth/signin', signIn, name='signin'),
 
     path('recommend/', recomendacao, name='new_recomendation'),
-    path('recommend/pergunta', pergunta, name='pergunta'),
     path('recommend/view/<recomendacao_id>', visualizarRecomendacao, name='visualization'),
     path('recommend/delete/<recomendacao_id>', apagarRecomendacao, name='delete_recommendation'),
 

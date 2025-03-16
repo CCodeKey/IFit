@@ -7,6 +7,7 @@ from django.contrib.auth import login as _login
 from django.contrib.auth import logout as _logout
 from django.contrib.auth.decorators import login_required
 from datetime import date
+from .IA import modelo_de_linguagem
 
 def index(request):
     return render(request, "recomendacao/index.html")
@@ -24,7 +25,6 @@ def login(request):
            return render(request, "recomendacao/login.html")
     return render(request, "recomendacao/login.html")
 
-# FUNCTION - Validação de dados
 def signIn(request):
     # Validar os dados recebidos antes de enviar ao BD
     if request.method == 'POST':
@@ -52,8 +52,9 @@ def signIn(request):
             context['email'] = ''
             return render(request, "recomendacao/usuario_form.html", context)
         
-        user = User.objects.create_user(username=nome, email= email, password=senha, last_name=sobrenome)
+        user = User.objects.create_user(username=f"{nome}_{sobrenome}", email= email, password=senha, last_name=sobrenome)
         user.save()
+        
         perfil = Perfil(telefone=_telefone, data_de_nascimento=_dtNascimento, genero=_genero, usuario=user)
         perfil.save()
 
@@ -70,50 +71,6 @@ def home(request):
     recomendacao = Recomendacao.objects.filter(perfil=user)
     context = {'recomendacoes':recomendacao}
     return render(request, "recomendacao/home.html", context)        
-
-# FUNCTION - Aqui será chamada a IA para processar os dados
-@login_required(login_url="auth/login")
-def recomendacao(request):
-    if request.method == 'POST':
-    #     idade = request.POST.get('idade',None)
-    #     altura = request.POST.get('altura',None)
-    #     peso = request.POST.get('peso',None)
-    #     sexo = request.POST.get('sexo',None)
-    #     nivel_atividade = request.POST.get('nivel_atividade',None)
-    #     objetivo = request.POST.get('objetivo',None)
-    #     restricao = request.POST.get('restricao',None)
-    #     local_treino = request.POST.get('local_treino',None)
-    #     duracao_treino = request.POST.get('duracao_treino',None)
-    #     email = request.POST.get('email',None)
-
-    #     context = {'objetivo':objetivo, 'peso':peso, 'altura':altura}
-
-       
-
-        # user = Perfil.objects.filter(usuario=request.user).first()
-        # rec = Recomendacao(titulo=titulo_, descricao=descricao_,link=link_, perfil=user)
-        # rec.save()
-        return redirect('home')
-    return render(request, "recomendacao/formulario.html")
-
-# FUNCTION - Esse método será removido antes de deixar em produção
-@login_required(login_url='auth/login')
-def pergunta(request): 
-    if request.method == 'POST':
-        titulo_ = request.POST.get('titulo',None)
-        descricao_ = request.POST.get('descricao',None)
-        link_ = request.POST.get('link',None)
-        user = Perfil.objects.filter(usuario=request.user).first()
-        rec = Recomendacao(titulo=titulo_, descricao=descricao_,link=link_, perfil=user)
-        rec.save()
-        return redirect('home')
-    return render(request, "recomendacao/pergunta.html")
- 
-@login_required(login_url='auth/login')
-def apagarRecomendacao(request, recomendacao_id):
-    rec = Recomendacao.objects.filter(id=recomendacao_id).first()
-    rec.delete()
-    return redirect('home')
 
 def formatar(data, _telefone):
     def idade(data_de_nasc):
@@ -156,6 +113,35 @@ def formatar(data, _telefone):
         numero = telefone(_telefone)
         return numero
 
+@login_required(login_url="auth/login")
+def recomendacao(request):
+    if request.method == 'POST':
+        altura = request.POST.get('altura',None)
+        peso = request.POST.get('peso',None)
+        nivel_atividade = request.POST.get('nivel_atividade',None)
+        objetivo = request.POST.get('objetivo',None)
+        restricao = request.POST.get('restricao',None)
+        local_treino = request.POST.get('local_treino',None)
+        duracao_treino = request.POST.get('duracao_treino',None)
+        
+        perfil = Perfil.objects.filter(usuario=request.user).first()
+        _data_de_nascimento = str(perfil.data_de_nascimento)
+        _genero = str(perfil.genero)
+
+        recomendacao_da_ia = modelo_de_linguagem(altura, peso, nivel_atividade, objetivo, restricao, local_treino, duracao_treino, _genero.lower(), formatar(_data_de_nascimento,0))
+
+        user = Perfil.objects.filter(usuario=request.user).first()
+        rec = Recomendacao(titulo=recomendacao_da_ia[0], descricao=recomendacao_da_ia[1],link=recomendacao_da_ia[2], perfil=user)
+        rec.save()
+        return redirect('home')
+    return render(request, "recomendacao/formulario.html")
+
+@login_required(login_url='auth/login')
+def apagarRecomendacao(request, recomendacao_id):
+    rec = Recomendacao.objects.filter(id=recomendacao_id).first()
+    rec.delete()
+    return redirect('home')
+
 @login_required(login_url='auth/login')
 def perfilUsuario(request):
     user = User.objects.filter(username=request.user).first()
@@ -184,7 +170,7 @@ def editarPerfil(request):
         _usua = User.objects.get(username = request.user)
         _perf = Perfil.objects.get(usuario = _usua)
 
-        _usua.username = Nome
+        _usua.username = f"{Nome}_{SobreNome}"
         _usua.last_name = SobreNome
         _perf.genero = Genero
         _perf.data_de_nascimento = Data_de_nascimento

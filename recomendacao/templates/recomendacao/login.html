@@ -1,25 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Entrar com sua conta</h2>
-    <a href="{% url 'index' %}">home</a>
+{% extends "recomendacao/home.html" %}
+{% load static %}
+{% block content%}
+    {% block link %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" media="screen" />
+        <title>IFit - Login</title>
+    {% endblock link %}
+    <link rel="stylesheet" href="login.css">
+    <body>
+        <header>
+            <nav>
+                <a href="{% url 'index' %}" class="row justify-content-start nav-button-voltar m-4">Voltar</a></li>
+            </nav>
+        </header>
+        <div class="login-container">
+            <h1>IFit</h1>
+            <h2>Login</h2>
 
-    <form method="POST">
-        {% csrf_token %}
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required><br>
-        
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" placeholder="digite sua senha" required><br>
-        
-        <button type="submit" value="Submit">Logar</button>
-      </form> 
-      <a href="{% url 'signin' %}">Criar um conta</a><br>
-      <a href="{% url 'password_reset' %}">Esqueci minha senha</a>
-</body>
-</html>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required><br>
+                </div>
+                <div class="input-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" placeholder="digite sua senha" required><br>
+                </div>
+                <button type="submit" value="Submit" class="btn">Logar</button>
+            </form> 
+            <div class="row justify-content-center p-2">
+                <a href="{% url 'signin' %}" class="button-link mt-2">Criar um conta</a><br>
+                <a href="{% url 'password_reset' %}" class="button-link m-3">Esqueci minha senha</a>
+            </div>
+        </div>
+    </body>
+{% endblock content%}

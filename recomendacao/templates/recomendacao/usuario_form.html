@@ -1,48 +1,146 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignIn</title>
-</head>
-<body>
-    <h2>Criar nova conta</h2>
-    <a href="{% url 'index' %}">home</a>
-    
-    <form method="POST" action="{% url 'signin' %}">
-        {% csrf_token %}
+{% extends "recomendacao/home.html" %}
+{% load static %}
+    {% block link %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/signin.css' %}" media="screen" />
+        <title>IFit - Sign in</title>
+    {% endblock link %}
+    <link rel="stylesheet" href="signin.css">
+  {% block content %}
+  <body>
+      <header class="header p-1">
+          <nav>
+            <a href="{% url 'index' %}" class="row justify-content-start nav-button-voltar m-4">Voltar</a>
+          </nav>
+          <h1>IFit</h1>
+      </header>
+      <section class="hero">
+          <h2>Faça já o seu cadastro</h2>
+      </section>
+      <main class="container">
+          <form action="#" method="post" id="form-cadastro">
+            {% csrf_token %}
+            <!-- campo de nome -->
+                <section class="section" >
+                  <div class="input-group">
+                  <label for="nome">Nome</label>
+                  <input type="text" id ="nome" name="nome" placeholder="nome" required autofocus aria-label="Nome Completo">   
+                  </div>
+              </section>      
+
+              <section class="section" >
+                <div class="input-group">
+                <label for="sobrenome">Sobrenome</label>
+                <input type="text" id ="sobrenome" name="sobrenome" placeholder="sobrenome" required autofocus aria-label="Sobrenome">   
+                </div>
+            </section>   
+
+            <!-- campo de sexo -->
+            <section class="section" >
+              <div class="input-group">
+                <label for="sexo">Sexo</label>
+                  <select id="sexo" name="sexo" required>
+                    <option value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="outro">Outro</option>
+                  </select>
+              </div>
+            </section>
+              
+
+            <!-- Telefone -->
+              <section class="section" >
+                  <div class="input-group">
+                  <label for="telefone">Número de Telefone: </label>
+                  <input type="tel" id ="telefone" name="telefone" pattern="^\(?\d{2}\)?\s?\d{4,5}-\d{4}$" placeholder="(xx) xxxx-xxxx" required>   
+                  </div>
+              </section>
+
+  
+            <!-- Nascimento -->
+              <section class="section" >
+                  <div class="input-group">
+                  <label for="dataDeNascimento">Data de Nascimento </label>
+                  <input type="date" id ="idade" name="idade" required>   
+                  </div>
+              </section>
+
+            <!-- E-mail -->
+              <section class="section">
+                  <div class="input-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+                  <small id="email-error" class="error-message" style="color: red; display: none;">Insira um e-mail válido.</small>
+                  </div>
+              </section>
+
+            <!-- Senha -->
+              <section class="section">
+                  <div class="input-group">
+                  <label for="password">Senha</label>
+                  <input type="password" id="password" name="password" placeholder="******" required>
+                  </div>
+              </section>
+
+            <!-- confirm. senha-->
+              <section class="section">
+                  <div class="input-group">
+                  <label for="confirm-password">Confirme sua senha</label>
+                  <input type="password" id="confirm-password" name="confirm-password" placeholder="******" required>
+                  <small id="password-error" class="error-message" style="color: red; display: none;">As senhas não coincidem.</small>
+                  </div> 
+              </section>
+
+            <!-- Submit -->
+              <section class="section mb-3">
+                  <button type="submit" class="btn" value="submit">Cadastrar</button>
+              </section>   
+          </form>
+          <div class="row  justify-content-center">
+            <a href="{% url 'login' %}" class="button-link">Já tenho uma conta</a>
+          </div>
+          <script>
+            // Validação de Telefone
+            document.getElementById('telefone').addEventListener('input', function (e) {
+                var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+                e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+            });
         
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" placeholder="digite seu primeiro nome" required><br>
-    
-        <label for="sobrenome">Sobrenome:</label>
-        <input type="text" id="sobrenome" name="sobrenome" placeholder="digite seu sobrenome" required><br>
-    
-        <label for="sexo">Sexo:</label>
-        <select id="sexo" name="sexo" required>
-          <option value="masculino">Masculino</option>
-          <option value="feminino">Feminíno</option>
-          <option value="other">outro</option>
-        </select><br>
-
-        <label for="telefone">Telefone:</label>
-        <input type="number" id="telefone" name="telefone" placeholder="88 888888888" required>{{ telefone }}<br>
-
-        <label for="dataDeNascimento">Data de Nascimento:</label>
-        <input type="date" id="idade" name="idade" placeholder="20" required><br>
-                
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>{{ email }}<br>
-
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" placeholder="digite sua senha" required><br>
+            document.getElementById('telefone').addEventListener('blur', function (e) {
+                var pattern = /^\(\d{2}\) \d{5}-\d{4}$/;
+                if (!pattern.test(e.target.value)) {
+                    alert('Número de telefone inválido! Por favor, insira no formato (99) 99999-9999.');
+                    e.target.focus();
+                }
+            });
         
-        <label for="password">Confirme sua senha:</label>
-        <input type="password" id="comfirm-password" name="comfirm-password" placeholder="confirme sua senha" required><br>
+            // Validação de E-mail
+            document.getElementById('email').addEventListener('blur', function (e) {
+                const email = e.target.value;
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const emailError = document.getElementById('email-error');
         
-        <button type="submit" value="Submit">Criar</button>
-
-    </form> 
-      <a href="{% url 'login' %}">ja tenho uma conta</a>
-</body>
-</html>
+                if (!emailPattern.test(email)) {
+                    emailError.style.display = 'block';
+                } else {
+                    emailError.style.display = 'none';
+                }
+            });
+        
+            // Validação de Senha
+            document.getElementById('form-cadastro').addEventListener('submit', function(event) {
+                const senha = document.getElementById('password').value;
+                const confirmaSenha = document.getElementById('confirm-password').value;
+                const passwordError = document.getElementById('password-error');
+        
+                if (senha !== confirmaSenha) {
+                    passwordError.style.display = 'block';
+                    event.preventDefault(); // Impede o envio do formulário
+                } else {
+                    passwordError.style.display = 'none';
+                    // O formulário será enviado normalmente
+                }
+            });
+          </script>
+      </main>
+  </body>
+{% endblock content %}

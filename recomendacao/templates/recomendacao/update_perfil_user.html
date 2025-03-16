@@ -1,25 +1,42 @@
+{% extends "recomendacao/home.html" %}
+{% load static %}
+{% block content %}
+  <head>
+    {% block link %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/atualizar_dados.css' %}" media="screen" />
+        <title>Atualizar Perfil</title>
+    {% endblock link %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header class="header p-2 mb-4">
+      <nav>
+        <a href="{% url 'perfil' %}" class="row justify-content-start nav-button-voltar m-4">Voltar</a>
+      </nav>
+      <h1>Atualize seus dados</h1>
+    </header>
+    <div id="text-central">
+      <form method="POST" action="{% url 'editPerfil' %}">
+          {% csrf_token %}
+          <label for="nome">Nome:</label><br>
+          <input type="text" id="nome" name="nome" placeholder="digite seu primeiro nome" required value='{{usuario}}'><br><br>
 
-<h2>Atualize seus dados</h2>
+          <label for="sobrenome">Sobrenome:</label><br>
+          <input type="text" id="sobrenome" name="sobrenome" placeholder="digite seu sobrenome" required value='{{usuario.last_name}}'><br><br>
 
-<p><a href="{% url 'perfil' %}">volar</a></p>
-    
-<form method="POST" action="{% url 'editPerfil' %}">
-    {% csrf_token %}
-    
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" placeholder="digite seu primeiro nome" required value='{{usuario}}'><br>
+          <label for="sexo">Sexo:</label><br>
+          <select id="sexo" name="sexo" required>
+            <option value="masculino">Masculino</option>
+            <option value="feminino">Feminíno</option>
+            <option value="other">outro</option>
+          </select><br><br>
 
-    <label for="sobrenome">Sobrenome:</label>
-    <input type="text" id="sobrenome" name="sobrenome" placeholder="digite seu sobrenome" required value='{{usuario.last_name}}'><br>
-
-    <label for="sexo">Sexo:</label>
-    <select id="sexo" name="sexo" required>
-      <option value="masculino">Masculino</option>
-      <option value="feminino">Feminíno</option>
-      <option value="other">outro</option>
-    </select><br>
-
-    <label for="dataDeNascimento">Data de Nascimento:</label>
-    <input type="date" id="idade" name="idade" placeholder="20" required><br><br>
-            
-    <button type="submit" value="Submit">salvar</button>
+          <label for="dataDeNascimento">Data de Nascimento:</label><br>
+          <input type="date" id="idade" name="idade" placeholder="20" required><br><br>
+                  
+          <button type="submit" value="Submit">salvar</button>
+      </form>
+    </div>
+  </body>
+{% endblock content %}
