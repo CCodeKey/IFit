@@ -2,6 +2,7 @@
 import os
 import sys
 
+# -- Script principal para gerenciar o projeto (configurações/migrações/usuarios)
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'IFit.settings')
     try:

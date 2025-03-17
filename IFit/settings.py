@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 from urllib.parse import urlparse
 
+# -- Configurações do Projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
 
@@ -10,9 +11,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]  # ← Updated!
+ALLOWED_HOSTS = ["*"]
 
-# Application definition
+# APPs usados no projeto
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,15 +55,12 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'IFit.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+# URL do banco de dados no .env
 tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
 
+# Configuracoes do Banco de dados
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -74,8 +72,7 @@ DATABASES = {
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+# Validacoes de senha
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -92,35 +89,25 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
+# Configuracoes de internacionalizacao
 LANGUAGE_CODE = 'pt-br'
-
 TIME_ZONE = 'America/Fortaleza'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
+# Definindo pasta para os arquivos do front-end
 STATIC_URL = 'static/'
-
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Confirgurações de Envio do Email pelo MailerSend
+# Confirguracoes de Envio do Email pelo MailerSend
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.mailersend.net"
-EMAIL_PORT = 587
+EMAIL_PORT = os.getenv("PORT_BD")
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("MAILERSEND_EMAIL")
 EMAIL_HOST_PASSWORD = os.getenv("MAILERSEND_EMAIL_PASSWORD")

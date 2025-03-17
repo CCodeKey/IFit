@@ -2,6 +2,7 @@ from django.urls import path
 from .views import *
 from django.contrib.auth import views as auth_views 
 
+# -- URLs do projeto
 urlpatterns = [
     path('', index, name="index"),
     path('home', home, name='home'), 
