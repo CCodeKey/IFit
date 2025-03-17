@@ -147,27 +147,6 @@ def modelo_de_linguagem(P_altura, P_peso, P_nivel_atividade, P_objetivo, P_condi
     modelo = RandomForestClassifier(n_estimators=100, random_state=42)
     modelo.fit(X_train, y_train)
 
-
-
-    # Função para entrada do usuário
-    def entrada_usuario_valida(mensagem, tipo=str, opcoes=None):
-        while True:
-            valor = input(mensagem).strip()
-            if tipo == int:
-                try:
-                    return int(valor)
-                except ValueError:
-                    print("Por favor, insira um número válido.")
-            elif opcoes:
-                valor_lower = valor.lower()
-                opcoes_lower = [op.lower() for op in opcoes]
-                if valor_lower in opcoes_lower:
-                    return opcoes[opcoes_lower.index(valor_lower)]  # Retorna na formatação original
-                else:
-                    print(f"Opção inválida. Escolha entre: {', '.join(opcoes)}")
-            else:
-                return valor
-
     # Coletando dados do usuário
     idade = int(P_idade)
     altura = P_altura
