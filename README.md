@@ -36,7 +36,9 @@
         </td>
     </tr>
 </table>
+
 ---
+
 ## Como utilizar:
 1. Instalar o Poetry
   ```bash
